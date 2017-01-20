@@ -5,6 +5,9 @@ import com.groupdocs.conversion.converter.option.OutputType;
 import com.groupdocs.conversion.converter.option.PdfSaveOptions;
 import com.groupdocs.conversion.handler.ConversionHandler;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+
 /**
  * Created by ben on 1/19/17.
  */
@@ -36,6 +39,7 @@ public class App {
     }
 
     public static String convertToPdfAsFilePath(String fileName) throws java.io.IOException {
+        throwUnlessFileExists(fileName);
         // Instantiating the conversion handler
         ConversionHandler conversionHandler = new ConversionHandler(getConfiguration());
         PdfSaveOptions saveOption = new PdfSaveOptions();
@@ -45,15 +49,27 @@ public class App {
         return conversionHandler.<String> convert(fileName, saveOption);
     }
 
+    public static void throwUnlessFileExists(String fileName) throws FileNotFoundException {
+        File f = new File(fileName);
+        if (!(f.exists() && !f.isDirectory())) {
+            throw new FileNotFoundException(fileName);
+        }
+    }
+
     public static void main(String[] args) {
         try {
             System.out.println("Beginning conversion of " + args[0]);
             convertToPdfAsFilePath(args[0]);
-        } catch(java.io.IOException ex) {
+        } catch(FileNotFoundException ex) {
+            System.err.println("Oh no!  It looks like your file doesn't exist :-(");
+            System.exit(1);
+        } catch(java.lang.ArrayIndexOutOfBoundsException ex) {
+            System.err.println("Oh noes!  You gotta pass a filename in bro");
+            System.exit(1);
+        } catch (java.io.IOException ex) {
             ex.printStackTrace();
             System.err.println("Oh noes!  Error with the conversion");
             System.exit(1);
         }
     }
 }
-
