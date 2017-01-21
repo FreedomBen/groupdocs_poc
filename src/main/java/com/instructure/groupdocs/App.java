@@ -5,8 +5,8 @@ import com.groupdocs.conversion.converter.option.OutputType;
 import com.groupdocs.conversion.converter.option.PdfSaveOptions;
 import com.groupdocs.conversion.handler.ConversionHandler;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
+
 
 /**
  * Created by ben on 1/19/17.
@@ -45,15 +45,24 @@ public class App {
         throwUnlessFileExists(fileName);
         // Instantiating the conversion handler
         ConversionHandler conversionHandler = new ConversionHandler(getConfiguration());
+        FileInputStream fis = new FileInputStream(fileName);
         PdfSaveOptions saveOption = new PdfSaveOptions();
         saveOption.setOutputType(OutputType.String);
 
         // return the path of the converted document
-        return conversionHandler.<String> convert(fileName, saveOption);
+        return conversionHandler.<String> convert(fis, fileName, saveOption);
     }
 
     public static void throwUnlessFileExists(String fileName) throws FileNotFoundException {
         File f = new File(fileName);
+        try {
+           BufferedReader br = new BufferedReader(new FileReader(f));
+            String text = br.readLine();
+            System.out.println("text = " + text);
+            br.close();
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
         if (!(f.exists() && !f.isDirectory())) {
             throw new FileNotFoundException(fileName);
         }
