@@ -18,9 +18,12 @@ public class App {
      * may be helpful
      */
 
-    public static String storagePath = "/home/ben/groupdocs/storage";
-    public static String outputPath = "/home/ben/groupdocs/output";
-    public static String cachePath = "/home/ben/groupdocs/cache";
+//    public static String storagePath = "/home/ben/groupdocs/storage";
+//    public static String outputPath = "/home/ben/groupdocs/output";
+//    public static String cachePath = "/home/ben/groupdocs/cache";
+    public static String storagePath = "./storage";
+    public static String outputPath = "./output";
+    public static String cachePath = "./cache";
 
     public static ConversionConfig getConfiguration() {
         try {
