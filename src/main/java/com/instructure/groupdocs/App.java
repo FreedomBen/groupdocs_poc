@@ -17,10 +17,6 @@ public class App {
      * https://github.com/groupdocs-conversion/GroupDocs.Conversion-for-Java/blob/master/Examples/GroupDocs.Conversion.Examples.Java/src/main/java/com/groupdocs/conversion/examples/Conversion.java#L312
      * may be helpful
      */
-
-//    public static String storagePath = "/home/ben/groupdocs/storage";
-//    public static String outputPath = "/home/ben/groupdocs/output";
-//    public static String cachePath = "/home/ben/groupdocs/cache";
     public static String storagePath = "./storage";
     public static String outputPath = "./output";
     public static String cachePath = "./cache";
@@ -55,14 +51,6 @@ public class App {
 
     public static void throwUnlessFileExists(String fileName) throws FileNotFoundException {
         File f = new File(fileName);
-        try {
-           BufferedReader br = new BufferedReader(new FileReader(f));
-            String text = br.readLine();
-            System.out.println("text = " + text);
-            br.close();
-        }catch(Exception e) {
-            e.printStackTrace();
-        }
         if (!(f.exists() && !f.isDirectory())) {
             throw new FileNotFoundException(fileName);
         }
