@@ -5,6 +5,7 @@ import com.groupdocs.conversion.converter.option.*;
 import com.groupdocs.conversion.handler.ConversionHandler;
 
 import java.io.*;
+import java.util.List;
 
 /**
  * Created by ben on 1/19/17.
@@ -26,7 +27,7 @@ public class App {
             conversionConfig.setStoragePath(storagePath);
             conversionConfig.setOutputPath(outputPath);
             conversionConfig.setCachePath(cachePath);
-            conversionConfig.setUseCache(true);
+            conversionConfig.setUseCache(false);
             return conversionConfig;
         } catch (Exception exp) {
             System.out.println("Exception: " + exp.getMessage());
@@ -38,23 +39,29 @@ public class App {
     public static String convertToHtmlAsFilePath(String fileName) throws IOException {
         // Instantiating the conversion handler
         ConversionHandler conversionHandler = new ConversionHandler(getConfiguration());
+        FileInputStream fis = new FileInputStream(fileName);
         HtmlSaveOptions saveOption = new HtmlSaveOptions();
         saveOption.setOutputType(OutputType.String);
 
         // Set absolute path to file
         String guid = fileName;
 
-        return conversionHandler.<String>convert(guid, saveOption);
+        String convertedDocumentPath = conversionHandler.<String> convert(fis, guid, saveOption);
+        fis.close();
+        return convertedDocumentPath;
     }
 
-    public static List<String> convertToImageAsFilePath(String fileName) {
+    public static List<String> convertToImageAsFilePath(String fileName) throws IOException {
         // Instantiating the conversion handler
         ConversionHandler conversionHandler = new ConversionHandler(getConfiguration());
+        FileInputStream fis = new FileInputStream(fileName);
         SaveOptions saveOption = new ImageSaveOptions();
         saveOption.setConvertFileType(ImageSaveOptions.ImageFileType.Png);
         saveOption.setOutputType(OutputType.String);
 
-        return conversionHandler.<List<String>>convert(fileName, saveOption);
+        List<String> convertedDocumentPath = conversionHandler.<List<String>> convert(fis, fileName, saveOption);
+        fis.close();
+        return convertedDocumentPath;
     }
 
     public static String convertToPdfAsFilePath(String fileName) throws java.io.IOException {
@@ -66,7 +73,9 @@ public class App {
         saveOption.setOutputType(OutputType.String);
 
         // return the path of the converted document
-        return conversionHandler.<String>convert(fis, fileName, saveOption);
+        String convertedDocumentPath = conversionHandler.<String> convert(fis, fileName, saveOption);
+        fis.close();
+        return convertedDocumentPath;
     }
 
     public static void throwUnlessFileExists(String fileName) throws FileNotFoundException {
