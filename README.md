@@ -23,7 +23,7 @@ If you put all your input files into a directory called 'inputs' then you can ru
 ```
 
 You probably want to compensate for a bug in groupdocs that outputs the png files with windows
-paths instead of platform dependent paths (i.e. the `/` on \*nix systems and `\\` on windows
+paths instead of platform dependent paths (i.e. the `/` on \*nix systems and `\` on windows
 systems) by running the supplied fix-up script:
 
 ```bash
