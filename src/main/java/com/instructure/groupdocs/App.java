@@ -3,6 +3,7 @@ package com.instructure.groupdocs;
 import com.groupdocs.conversion.config.ConversionConfig;
 import com.groupdocs.conversion.converter.option.*;
 import com.groupdocs.conversion.handler.ConversionHandler;
+import com.groupdocs.conversion.License;
 
 import java.io.*;
 import java.util.List;
@@ -19,6 +20,7 @@ public class App {
     public static String storagePath = "./storage";
     public static String outputPath = "./output";
     public static String cachePath = "./cache";
+    public static InputStream licensePath = App.class.getResourceAsStream("./GroupDocs.Conversion.lic");
 
     public static ConversionConfig getConfiguration() {
         try {
@@ -86,6 +88,17 @@ public class App {
     }
 
     public static void main(String[] args) {
+
+      // For complete examples and data files, please go to https://github.com/groupdocs-conversion/GroupDocs.Conversion-for-Java
+        try {
+            // Setup license
+            License lic = new License();
+            lic.setLicense(licensePath);
+            System.out.println(lic.isValidLicense());
+        } catch (Exception exp) {
+            System.out.println("Exception: " + exp.getMessage());
+            exp.printStackTrace();
+        }
         try {
             System.out.println("Beginning conversion of " + args[0]);
             System.out.println("Conversion " + args[0] + " to PDF");
